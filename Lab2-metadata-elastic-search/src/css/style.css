@@ -1,0 +1,254 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 20px;
+}
+
+body {
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  background: rgb(255, 210, 111);
+  color: black;
+  height: 225vh;
+}
+
+header {
+  width: 50%;
+  margin: 0 auto;
+  font-size: 2.1em;
+  border-radius: 4%;
+  user-select: none;
+  text-align: center;
+}
+
+h1 {
+  width: 70%;
+  display: inline-block;
+  font-size: 1.15em;
+}
+
+h3, #title-input {
+  margin: 1vh 0px;
+  text-align: center;
+  background-color:rgba(171, 98, 171, 0.724);
+  width: 100%;
+  padding: 0;
+  border: 0;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+main {
+  display: flex;
+  text-align: center;
+  padding: 15px;
+}
+
+main > aside {
+  flex: 1;
+}
+
+main > section {
+  flex: 3.5;
+}
+
+
+
+.search-mode {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.search-mode-button {
+  font-size: 1.5em;
+  font-weight: bold;
+  width: 50%;
+}
+
+.search-mode-button:hover {
+  /* background-color:rgb(250, 250, 162);  */
+  font-weight: normal;
+}
+
+#filterMode {
+  background-color:rgba(171, 98, 171, 0.724);
+}
+
+#fulltextMode {
+  background: white;
+}
+
+.filter-legend {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+fieldset {
+  padding-top: 0;
+}
+
+fieldset div {
+  text-align: left;
+  padding: 5px;
+}
+
+input, button {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.filter-label {
+  display: inline-block;
+  width: 80%;
+  text-align: center;
+  user-select: none;
+}
+
+.block-common {
+  background-color: white;
+  border: 2px solid black;
+  text-align: center;
+}
+
+.custom-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+
+.custom-container input, .custom-container button {
+  font-size: 1em;
+  text-align: center;
+  width: 100%;
+}
+
+input[type="text"] {
+  white-space: pre-line;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+input[type="checkbox"] {
+  width: 10%;
+  transform: scale(1.5);
+}
+
+.filter-submit {
+  display: block;
+  width: 100%;
+  font-size: 1.2em;
+  font-weight: bold;
+  border-radius: 10%;
+  margin: 15px 0;
+  padding: 5px;
+}
+
+.filter-submit:hover {
+  background: rgb(250, 250, 162);
+}
+
+.filter-submit:active {
+  background: red;
+  font-weight: normal;
+}
+
+.games-flex-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  overflow: auto;
+}
+
+.game-card {
+  flex-basis: 33.33%;
+  padding: 0px 15px;
+  text-align: left;
+}
+
+.interactable-button {
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  width: 35px;
+  height: 35px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.edit-button {
+  background-image: url('/assets/edit-button-icon.png');
+}
+
+.save-button {
+  background-image: url('/assets/save-button-icon.png');
+}
+
+.discard-button {
+  background-image: url('/assets/discard-button-icon.png');
+}
+
+.delete-button {
+  background-image: url('/assets/delete-button-icon.png');
+}
+
+.create-button {
+  background-image: url('/assets/create-button-icon.png');
+}
+
+.add-button {
+  background-image: url('/assets/add-button-icon.png');
+}
+
+.card-support {
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.card-property-label {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+legend.card-property-label {
+  padding: 8px 0;
+}
+
+.card-property-block {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 10px 0px;
+}
+
+.card-property-block > label {
+  width: 20%;
+}
+
+.game-card input, textarea {
+  border: 0;
+  background-color:rgb(250, 250, 162);
+  color: purple;
+  font-weight: bold;
+  font-size: 0.9em;
+  text-align: center;
+  padding: 10px;
+  flex: auto;
+}
+
+textarea {
+  resize: none;
+  outline: none;
+  height: 10vh;
+  max-height: 40vh;
+  font-size: 0.8em;
+  text-align: left;
+}
+
+#fulltextForm {
+  display: none;
+}

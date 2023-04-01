@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elastisearch game documents search system</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header class="block-common">
+    <h1>
+      Elastic search system for games
+    </h1>
+    <svg fill="#000000" height="100px" width="100px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 233.238 233.238" xml:space="preserve">
+      <path d="M53.329,192.233c27.104,0,49.47-20.226,52.866-46.405h20.847c3.397,26.18,25.762,46.405,52.867,46.405
+        c29.453,0,53.329-23.876,53.329-53.329c0-28.574-22.474-51.896-50.709-53.263v-0.066h-51.845
+        c2.998-12.662,14.391-22.114,27.958-22.114h20.609V41.005h-20.609c-25.982,0-47.489,19.461-50.748,44.569H50.709v0.066
+        C22.474,87.007,0,110.33,0,138.904C0,168.357,23.876,192.233,53.329,192.233z M195.011,112.791c5.418,0,9.809,4.393,9.809,9.81
+        c0,5.418-4.391,9.811-9.809,9.811s-9.809-4.393-9.809-9.811C185.202,117.185,189.593,112.791,195.011,112.791z M195.011,139.607
+        c5.418,0,9.809,4.391,9.809,9.81c0,5.417-4.391,9.81-9.809,9.81s-9.809-4.393-9.809-9.81
+        C185.202,143.997,189.593,139.607,195.011,139.607z M164.629,112.791c5.418,0,9.809,4.393,9.809,9.81
+        c0,5.418-4.391,9.811-9.809,9.811c-5.418,0-9.809-4.393-9.809-9.811C154.82,117.185,159.211,112.791,164.629,112.791z
+        M164.629,139.607c5.418,0,9.809,4.391,9.809,9.81c0,5.417-4.391,9.81-9.809,9.81c-5.418,0-9.809-4.393-9.809-9.81
+        C154.82,143.997,159.211,139.607,164.629,139.607z M28.256,129.21h16.013v-15.184h14.54v15.184h14.356v14.538H58.808v15.185h-14.54
+        v-15.185H28.256V129.21z"/>
+    </svg>
+  </header>
+  <main>
+    <aside class="filters-wrapper">
+      <div class="search-mode">
+        <button class="search-mode-button" type="button" id="filterMode">Filter search</button>
+        <button class="search-mode-button" type="button" id="fulltextMode">Full-text search</button>
+      </div>
+      <form id="filtersForm"> <!-- lab2 -->
+        <fieldset class="block-common" id="company-filter">
+          <legend class="filter-legend">Company</legend>
+          <div>
+            <input id="valveCheckbox" type="checkbox" name="company" value="Valve Inc.">
+            <label for="valveCheckbox" class="filter-label">Valve Inc.</label>
+          </div>
+          <div>
+            <input id="fromCheckbox" type="checkbox" name="company" value="FromSoftware">
+            <label for="fromCheckbox" class="filter-label">FromSoftware</label>
+          </div>
+          <div>
+            <input id="ubisoftCheckbox" type="checkbox" name="company" value="Ubisoft">
+            <label for="ubisoftCheckbox" class="filter-label">Ubisoft</label>
+          </div>
+          <div>
+            <input id="activisionCheckbox" type="checkbox" name="company" value="Activision Blizzard">
+            <label for="activisionCheckbox" class="filter-label">Activision Blizzard</label>
+          </div>
+          <div>
+            <input id="nintendoCheckbox" type="checkbox" name="company" value="Nintendo">
+            <label for="nintendoCheckbox" class="filter-label">Nintendo</label>
+          </div>
+          <div class="custom-container">
+            <input type="text" pattern=".*\S+.*" id="customCompany">
+            <button id="addCustomCompany" type="button">Add</button>
+          </div>
+        </fieldset>
+        <fieldset class="block-common" id="companyincludes-filter"> <!-- regexp filters -->
+          <legend class="filter-legend">Company includes</legend>
+          <div>
+            <input id="softCheckbox" type="checkbox" name="companyincludes" value="soft">
+            <label for="softCheckbox" class="filter-label">soft</label>
+          </div>
+          <div>
+            <input id="softwareCheckbox" type="checkbox" name="companyincludes" value="software">
+            <label for="softwareCheckbox" class="filter-label">software</label>
+          </div>
+          <div>
+            <input id="gamesCheckbox" type="checkbox" name="companyincludes" value="games">
+            <label for="gamesCheckbox" class="filter-label">games</label>
+          </div>
+          <div class="custom-container">
+            <input type="text" pattern=".*\S+.*" id="customCompanyIncludes">
+            <button id="addCustomCompanyIncludes" type="button">Add</button>
+          </div>
+        </fieldset>
+        <fieldset class="block-common" id="platforms-filter">
+          <legend class="filter-legend">Platforms</legend>
+          <div>
+            <input id="windowsCheckbox" type="checkbox" name="platforms" value="Microsoft Windows">
+            <label for="windowsCheckbox" class="filter-label">Microsoft Windows</label>
+          </div>
+          <div>
+            <input id="play station 4Checkbox" type="checkbox" name="platforms" value="Play Station 4">
+            <label for="play station 4Checkbox" class="filter-label">Play Station 4</label>
+          </div>
+          <div>
+            <input id="play station 5Checkbox" type="checkbox" name="platforms" value="Play Station 5">
+            <label for="play station 5Checkbox" class="filter-label">Play Station 5</label>
+          </div>
+          <div>
+            <input id="xbox oneCheckbox" type="checkbox" name="platforms" value="Xbox One">
+            <label for="xbox oneCheckbox" class="filter-label">Xbox One</label>
+          </div>
+          <div>
+            <input id="android 9+Checkbox" type="checkbox" name="platforms" value="Android 9+">
+            <label for="android 9+Checkbox" class="filter-label">Android 9+</label>
+          </div>
+          <div>
+            <input id="iOS 14+Checkbox" type="checkbox" name="platforms" value="iOS 14+">
+            <label for="iOS 14+Checkbox" class="filter-label">iOS 14+</label>
+          </div>
+          <div class="custom-container">
+            <input type="text" pattern=".*\S+.*" id="customPlatform">
+            <button id="addCustomPlatform" type="button">Add</button>
+          </div>
+        </fieldset>
+        <fieldset class="block-common" id="released-filter">
+          <legend class="filter-legend">Release range</legend>
+          <div>         
+            <input id="1970-01-01/2000-01-01Checkbox" type="checkbox" name="released" value="1970-01-01/2000-01-01">
+            <label for="1970-01-01/2000-01-01Checkbox" class="filter-label">Before 2000 (Oldest)</label>
+          </div>
+          <div>
+            <input id="2000-01-01/2005-01-01Checkbox" type="checkbox" name="released" value="2000-01-01/2005-01-01">
+            <label for="2000-01-01/2005-01-01Checkbox" class="filter-label">2000-2005</label>
+          </div>
+          <div>
+            <input id="2005-01-01/2010-01-01Checkbox" type="checkbox" name="released" value="2005-01-01/2010-01-01">
+            <label for="2005-01-01/2010-01-01Checkbox" class="filter-label">2005-2010</label>
+          </div>
+          <div>
+            <input id="2010-01-01/2015-01-01Checkbox" type="checkbox" name="released" value="2010-01-01/2015-01-01">
+            <label for="2010-01-01/2015-01-01Checkbox" class="filter-label">2010-2015</label>
+          </div>
+          <div>
+            <input id="2015-01-01/2020-01-01Checkbox" type="checkbox" name="released" value="2015-01-01/2020-01-01">
+            <label for="2015-01-01/2020-01-01Checkbox" class="filter-label">2015-2020</label>
+          </div>
+          <div>
+            <input id="2020-01-01/nowCheckbox" type="checkbox" name="released" value="2020-01-01/now">
+            <label for="2020-01-01/nowCheckbox" class="filter-label">2020-now (Latest)</label>
+          </div>
+          <div class="custom-container">
+            <label for="customReleasedStart">From: </label>
+            <input id="customReleasedStart" type="date" value="" min="1970-01-01" max="2023-03-24">
+            <label for="customReleasedEnd">To: </label>
+            <input id="customReleasedEnd" type="date" value="" min="1970-01-01" max="2023-03-24">
+            <button id="addCustomReleasedRange" type="button">Add</button>
+          </div>
+        </fieldset>
+        <fieldset class="block-common" id="rating-filter">
+          <legend class="filter-legend">Rating range</legend>
+          <div>
+            <input id="0-1ratingCheckbox" type="checkbox" name="rating" value="0-1">
+            <label for="0-1ratingCheckbox" class="filter-label">0...1</label>
+          </div>
+          <div>
+            <input id="1-2ratingCheckbox" type="checkbox" name="rating" value="1-2">
+            <label for="1-2ratingCheckbox" class="filter-label">1...2</label>
+          </div>
+          <div>
+            <input id="2-3ratingCheckbox" type="checkbox" name="rating" value="2-3">
+            <label for="2-3ratingCheckbox" class="filter-label">2...3</label>
+          </div>
+          <div>
+            <input id="3-4ratingCheckbox" type="checkbox" name="rating" value="3-4">
+            <label for="3-4ratingCheckbox" class="filter-label">3...4</label>
+          </div>
+          <div>
+            <input id="4-5ratingCheckbox" type="checkbox" name="rating" value="4-5">
+            <label for="4-5ratingCheckbox" class="filter-label">4...5</label>
+          </div>
+          <div class="custom-container">
+            <label for="customRatingStart">From: </label>
+            <input id="customRatingStart" type="number" value="0" min="0" step="0.1" max="5">
+            <label for="customRatingEnd">To: </label>
+            <input id="customRatingEnd" type="number" value="5" min="0" step="0.1" max="5">
+            <button id="addCustomRatingRange" type="button">Add</button>
+          </div>
+        </fieldset>
+        <button type="submit" class="filter-submit">Apply</button>
+      </form>
+      <form id="fulltextForm"> <!-- lab3 -->
+        <fieldset class="block-common" id="title-fulltext">
+          <legend class="filter-legend">Title</legend>
+          <div class="custom-container">
+            <input type="text" name="title" placeholder="Example title...">
+          </div>
+        </fieldset>
+        <fieldset class="block-common" id="about-fulltext">
+          <legend class="filter-legend">About</legend>
+          <div class="custom-container">
+            <input type="text" name="about" placeholder="Action RPG game...">
+          </div>
+        </fieldset>
+        <fieldset class="block-common" id="review-fulltext">
+          <legend class="filter-legend">Expert review</legend>
+          <div class="custom-container">
+            <input type="text" name="review" placeholder="Epic, breathtaking game...">
+          </div>
+        </fieldset>
+        <button type="submit" class="filter-submit">Apply</button>
+      </form>
+    </aside>
+    <section>
+      <h2>Catalog</h2>
+      <div class="games-flex-wrapper">
+        <!-- game card-creator -->
+        <div class="game-card">
+          <form id="newGameForm">
+            <input type="text" name="title" id="title-input" placeholder="Game Title..." pattern=".*\S+.*" required>
+            <div class="card-property-block">
+              <label for="newGameCard_company" class="card-property-label">Produced by</label>
+              <input id="newGameCard_company" name="company" type="text" value="" placeholder="A company..." pattern=".*\S+.*" required>
+            </div>
+            <fieldset class="card-support">
+              <legend class="card-property-label">Supported at</legend>
+              <!-- <div>
+                <input id="newGameCard_platform1" name="platforms" type="checkbox" value="Windows" checked>
+                <label for="newGameCard_platform1"><input type="text"></label>
+              </div> -->
+              <button type="button" class="interactable-button add-button"></button>
+            </fieldset>
+            <div class="card-property-block">
+              <label for="newGameCard_released" class="card-property-label">Released </label>
+              <input id="newGameCard_released" name="released" type="date" value="" min="1970-01-01" max="2023-03-24" required>
+            </div>
+            <div class="card-property-block">
+              <label for="newGameCard_rating" class="card-property-label">Rating: </label>
+              <input id="newGameCard_rating" name="rating" type="number" min="0" max="5" step="0.1" value="" placeholder="3.5" required>
+            </div>
+            <div class="card-property-block">
+              <label for="newGameCard_about" class="card-property-label">About: </label>
+              <textarea id="newGameCard_about" name="about" placeholder="An action-RPG game about..." required></textarea>
+            </div>
+            <div class="card-property-block">
+              <label for="newGameCard_review" class="card-property-label">Review: </label>
+              <textarea id="newGameCard_review" name="review" placeholder="Awesome game!..." required></textarea>
+            </div>
+            <button type="submit" class="interactable-button create-button"></button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="/js/index.js"></script>
+</body>
+</html>
