@@ -228,11 +228,11 @@
             </div>
             <div class="card-property-block">
               <label for="newGameCard_about" class="card-property-label">About: </label>
-              <textarea id="newGameCard_about" name="about" placeholder="An action-RPG game about..." required></textarea>
+              <textarea id="newGameCard_about" name="about" placeholder="An action-RPG game about..." onkeyup="textareaAutoresizeHandler(event)" required></textarea>
             </div>
             <div class="card-property-block">
               <label for="newGameCard_review" class="card-property-label">Review: </label>
-              <textarea id="newGameCard_review" name="review" placeholder="Awesome game!..." required></textarea>
+              <textarea id="newGameCard_review" name="review" placeholder="Awesome game!..." onkeyup="textareaAutoresizeHandler(event)" required></textarea>
             </div>
             <button type="submit" class="interactable-button create-button"></button>
           </form>

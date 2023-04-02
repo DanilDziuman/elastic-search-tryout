@@ -55,14 +55,10 @@ function initPlatformAddingButtons() {
 initPlatformAddingButtons();
 
 function initGameCreation() {
-  const textAreas = document.querySelectorAll('.card-property-block>textarea');
-  textAreas.forEach(textarea => {
-    textarea.addEventListener('keyup', (event) => {
-      event.target.style.height = 'auto';
-      const scHeight = event.target.scrollHeight;
-      event.target.style.height = `${scHeight}px`;
-    })
-  });
+  // const textAreas = document.querySelectorAll('.card-property-block>textarea');
+  // textAreas.forEach(textarea => {
+  //   textarea.addEventListener('keyup', textareaAutoresizeHandler);
+  // });
 
   const form = document.getElementById('newGameForm');
   form.addEventListener('submit', async (event) => {
@@ -192,6 +188,16 @@ function initCustomFilterButtons() {
 initCustomFilterButtons();
 
 function initGameSearchByFilters() {
+  function setFieldTextArea(gameCardID, field, innerValue) {
+    const textarea = document.createElement('textarea');
+    textarea.id = `gameCard${gameCardID+1}_${field}`;
+    textarea.name = field;
+    textarea.innerText = innerValue;
+    textarea.disabled = true;
+    textarea.addEventListener('keyup', textareaAutoresizeHandler);
+    return textarea;
+  }
+
   async function handleSubmit(event, searchAPI) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -207,7 +213,7 @@ function initGameSearchByFilters() {
     gameCardsWrapper.innerHTML = '';
     for (let i = 0; i < foundGames.length; i++) {
       const game = foundGames[i]._source;
-      if (typeof game.platforms === 'string') { // костиль
+      if (typeof game.platforms === 'string') {
         game.platforms = [game.platforms]
       }
       const supportedFieldset = document.createElement('fieldset');
@@ -229,6 +235,10 @@ function initGameSearchByFilters() {
       supportedFieldset.appendChild(supportedEditButton);
       const appendedGameCard = document.createElement('div');
       appendedGameCard.className = 'game-card';
+
+      const aboutTextarea = setFieldTextArea(i, "about", game.about);
+      const reviewTextarea = setFieldTextArea(i, "review", game.review);
+      
       appendedGameCard.innerHTML = 
       `<h3>${game.title}</h3>
       <form>
@@ -240,7 +250,7 @@ function initGameSearchByFilters() {
         ${supportedFieldset.outerHTML}
         <div class="card-property-block">
           <label for="gameCard${i+1}_released" class="card-property-label">Released </label>
-          <input id="gameCard${i+1}_released" name="released" type="date" value="${game.released}" min="1970-01-01" max="2023-03-24" disabled>
+          <input id="gameCard${i+1}_released" name="released" type="date" value="${game.released.slice(0, 10)}" min="1970-01-01" max="2023-03-24" disabled>
           <button type="button" class="interactable-button edit-button"></button>
         </div>
         <div class="card-property-block">
@@ -250,22 +260,19 @@ function initGameSearchByFilters() {
         </div>
         <div class="card-property-block" about>
           <label for="gameCard${i+1}_about" class="card-property-label">About: </label>
-          <textarea id="gameCard${i+1}_about" name="about" disabled>${game.about}</textarea>
+          ${aboutTextarea.outerHTML}
           <button type="button" class="interactable-button edit-button"></button>
         </div>
         <div class="card-property-block" review>
           <label for="gameCard${i+1}_review" class="card-property-label">Review: </label>
-          <textarea id="gameCard${i+1}_review" name="review" disabled>${game.review}</textarea>
+          ${reviewTextarea.outerHTML}
           <button type="button" class="interactable-button edit-button"></button>
         </div>
         <button type="button" class="interactable-button delete-button" onclick="gameDeleteHandler(this)" id="${game.title}Delete"></button>
       </form>`;
-  
       gameCardsWrapper.appendChild(appendedGameCard);
     }
     gameCardsWrapper.appendChild(lastCustomGameCard);
-
-    // FINISH THIS METHOD UP AFTER BACK-END!
   }
   
   const filtersForm = document.getElementById('filtersForm');
@@ -291,4 +298,10 @@ async function gameDeleteHandler(button) {
   console.log(response);
   const gameCard = button.parentElement.parentElement;
   gameCard.remove();
+}
+
+function textareaAutoresizeHandler(event) {
+  event.target.style.height = 'auto';
+  const scHeight = event.target.scrollHeight;
+  event.target.style.height = `${scHeight}px`;
 }

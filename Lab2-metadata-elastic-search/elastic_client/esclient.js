@@ -10,7 +10,7 @@ const esclient = new ElasticSearch.Client({
     password: 'fA*9_b0y*lD_=ptMvXdc'
   },
   tls: {
-    ca: fs.readFileSync('../elasticsearch-8.6.2/config/certs/http_ca.crt'),
+    ca: fs.readFileSync('../../elasticsearch-8.6.2/config/certs/http_ca.crt'),
     rejectUnauthorized: false
   }
 });
@@ -34,7 +34,7 @@ class ESCGames {
             },
             analysis: {
               char_filter: { // for the custom analyzer of 'title' field
-                title_char_filter: {
+                title_numerals_mapper: {
                   type: "mapping",
                   mappings: [
                     "Ⅰ => 1",
@@ -51,16 +51,18 @@ class ESCGames {
                     "Ⅻ => 12"
                   ]
                 },
-                title_punctuation_replace_filter: {
+                title_dots_replace_filter: {
                   type: "pattern_replace",
+                  pattern: "(?<=\\w)\\.+(?=\\w)",
+                  replacement: ""
                 }
               },
-              filter: { // ["a", "osdlfo", "sdfsd", "sdfsdf", "sdfs", "a", "the", fdfs]
+              filter: {
                 english_stop: { // stop-words like 'be', 'I', etc.
                   type: "stop",
                   stopwords: "_english_"
                 },                          // [closes closing closed] => [close, closi, close]. Query: closing => [closi]   
-                english_original_stemmer: { // rooting of words (overweight -> weight, closes -> close, etc.)
+                english_original_stemmer: { // rooting of words
                   type: "stemmer",
                   language: "english"
                 },
@@ -70,13 +72,13 @@ class ESCGames {
                 }
               },
               analyzer: {
-                standard_analyzer: { // for 'about' field
+                standard_analyzer: { // for 'review' field
                   type: "standard",
                   stopwords: "_english_"
                 },
 
-                english_analyzer: { // for 'review' field
-                  tokenizer: "standard", // "a osdkfo sa sod os sosd dd" => ["a", "osdlfo"]
+                english_analyzer: { // for 'about' field
+                  tokenizer: "standard",
                   filter: [
                     "lowercase",
                     "english_stop",
@@ -88,13 +90,14 @@ class ESCGames {
                 custom_title_analyzer: { // for 'title' field
                   type: "custom",
                   char_filter: [
-                    "title_char_filter"
+                    "title_numerals_mapper",
+                    "title_dots_replace_filter"
                   ],
                   tokenizer: "classic", // "asdasd  N.E.O.N. sdfsodfsod" => "neon". "N", "E", "O", "N"
                   filter: [
                     "lowercase", 
                     "asciifolding", // diacritic symbols -> normal symbols o.. => o, e.. => e
-                    "classic", // interpret punctual characters differently (neon example) + remove 's
+                    "classic", // interpret punctual characters differently
                     "english_original_stemmer",
                     "english_possessive_stemmer",
                     "trim" // not implied by default due to 'classic' tokenizer
@@ -429,7 +432,6 @@ class ESCGames {
   }
 }
 
-// await ESCGames.deleteGamesIndex();
 await ESCGames.initGamesIndex();
 
 export default ESCGames;
